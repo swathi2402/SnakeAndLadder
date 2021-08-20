@@ -1,6 +1,12 @@
 package com.Bridgelabz.SnakeAndLadder;
 
 public class SnakeAndLadder {
+	public static final int NO_PLAY = 0;
+	public static final int LADDER = 1;
+	public static final int SNAKE = 2;
+	public static final int WIN = 100;
+	public static final int START = 0;
+	
 	public static int rollDice() {
 		int outcome = (int) Math.floor(Math.random() * 6 + 1);
 		return outcome;
@@ -13,30 +19,36 @@ public class SnakeAndLadder {
 
 	public static void main(String[] args) {
 		System.out.println("***** Welcome to Snake and Ladder Game *****");
-		int win = 100;
-		int start = 0;
 		int score = 0;
 		int options = 0;
-		int currentScore = 0;
-		while (score <= win) {
-			currentScore = rollDice();
+		int diceValue = 0;
+
+		while (score <= WIN) {
+			diceValue = rollDice();
 			options = options();
+
 			switch (options) {
-			case 0:
+			case NO_PLAY:
 				break;
 
-			case 1:
-				score += currentScore;
+			case LADDER:
+				if (score + diceValue > WIN) {
+					diceValue = 0;
+				}
+				score += diceValue;
 				break;
 
-			case 2:
-				if (score - currentScore < 0) {
+			case SNAKE:
+				if (score - diceValue < START) {
 					score = 0;
 				} else {
-					score -= currentScore;
+					score -= diceValue;
 				}
 			}
 			System.out.println(score);
+			if (score == WIN) {
+				break;
+			}
 		}
 	}
 }
