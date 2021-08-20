@@ -19,39 +19,67 @@ public class SnakeAndLadder {
 
 	public static void main(String[] args) {
 		System.out.println("***** Welcome to Snake and Ladder Game *****");
-		int position = 0;
+		int player1 = 0;
+		int player2 = 0;
 		int options = 0;
 		int diceValue = 0;
-		int count = 0;
+		boolean isPlayer1 = true;
 		
-		while (position <= WIN) {
+		while (player1 <= WIN || player2 <= WIN) {
 			diceValue = rollDice();
 			options = options();
 
 			switch (options) {
 			case NO_PLAY:
+				if (isPlayer1) {
+					isPlayer1 = false;
+				} else {
+					isPlayer1 = true;
+				}
 				break;
 
 			case LADDER:
-				if (position + diceValue > WIN) {
-					diceValue = 0;
+				if (isPlayer1) {
+					if (player1 + diceValue > WIN) {
+						diceValue = 0;
+					}
+					player1 += diceValue;
 				}
-				position += diceValue;
+				else {
+					if (player2 + diceValue > WIN) {
+						diceValue = 0;
+					}
+					player2 += diceValue;
+				}
 				break;
 
 			case SNAKE:
-				if (position - diceValue < START) {
-					position = 0;
-				} else {
-					position -= diceValue;
+				if(isPlayer1) {
+					if (player1 - diceValue < START) {
+						player1 = 0;
+					} else {
+						player1 -= diceValue;
+					}
+					isPlayer1 = false;
+				} 
+				else {
+					if (player2 - diceValue < START) {
+						player2 = 0;
+					} else {
+						player2 -= diceValue;
+					}
+					isPlayer1 = true;
 				}
 			}
-			System.out.println("Position: " + position);
-			count += 1;
-			if (position == WIN) {
+			System.out.println("Position:	" + "Player 1: " + player1 + " Player 2:  " + player2);
+			if (player1 == WIN) {
+				System.out.println("Player 1 won the game");
+				break;
+			}
+			else if (player2 == WIN) {
+				System.out.println("Player 2 won the game");
 				break;
 			}
 		}
-		System.out.println("Total number of time the dice rolled: " + count);
 	}
 }
