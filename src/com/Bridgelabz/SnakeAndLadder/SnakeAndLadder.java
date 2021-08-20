@@ -19,11 +19,12 @@ public class SnakeAndLadder {
 
 	public static void main(String[] args) {
 		System.out.println("***** Welcome to Snake and Ladder Game *****");
-		int score = 0;
+		int position = 0;
 		int options = 0;
 		int diceValue = 0;
-
-		while (score <= WIN) {
+		int count = 0;
+		
+		while (position <= WIN) {
 			diceValue = rollDice();
 			options = options();
 
@@ -32,23 +33,25 @@ public class SnakeAndLadder {
 				break;
 
 			case LADDER:
-				if (score + diceValue > WIN) {
+				if (position + diceValue > WIN) {
 					diceValue = 0;
 				}
-				score += diceValue;
+				position += diceValue;
 				break;
 
 			case SNAKE:
-				if (score - diceValue < START) {
-					score = 0;
+				if (position - diceValue < START) {
+					position = 0;
 				} else {
-					score -= diceValue;
+					position -= diceValue;
 				}
 			}
-			System.out.println(score);
-			if (score == WIN) {
+			System.out.println("Position: " + position);
+			count += 1;
+			if (position == WIN) {
 				break;
 			}
 		}
+		System.out.println("Total number of time the dice rolled: " + count);
 	}
 }
